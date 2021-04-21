@@ -127,7 +127,9 @@
   },
   "eslintIgnore": [
     "node_modules/",
-    "lib/"
+    "lib/",
+    "src/__tests__/",
+    "example/"
   ],
   "prettier": {
     "quoteProps": "consistent",
@@ -149,5 +151,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "eventemitter3": "^4.0.7"
   }
 }

@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import LaunchPerformance from 'react-native-launch-performance';
+// import LaunchPerformance from 'react-native-launch-performance';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result, /* setResult */] = React.useState<number | undefined>();
 
   React.useEffect(() => {
-    LaunchPerformance.multiply(3, 7).then(setResult);
+    // LaunchPerformance.multiply(3, 7).then(setResult);
   }, []);
 
   return (

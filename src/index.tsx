@@ -1,5 +1,6 @@
+import performance from './performance';
+
 export default {
-  multiply(a: number, b: number) {
-    return Promise.resolve(a * b);
-  },
+  performance: performance.performance,
+  PerformanceObserver: performance.PerformanceObserver,
 };
