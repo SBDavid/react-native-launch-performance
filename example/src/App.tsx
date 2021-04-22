@@ -1,20 +1,21 @@
 import * as React from 'react';
-
 import { StyleSheet, View, Text } from 'react-native';
-// import LaunchPerformance from 'react-native-launch-performance';
+import LaunchPerformance from 'react-native-launch-performance';
 
-export default function App() {
-  const [result, /* setResult */] = React.useState<number | undefined>();
+export default class App extends React.PureComponent {
 
-  React.useEffect(() => {
-    // LaunchPerformance.multiply(3, 7).then(setResult);
-  }, []);
+  componentDidMount() {
+    LaunchPerformance.performance.mark("mark1");
+    console.info(LaunchPerformance.performance.getEntries());
+  }
 
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
-  );
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Result: </Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
