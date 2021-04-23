@@ -73,6 +73,14 @@ public class MainActivity extends ReactActivity {
         switch (name) {
           case RELOAD:
             markBuffer.clear();
+            // 标记开始时间
+            safelyEmitMark(
+              "react-native-mark",
+              "initTIme",
+              "",
+              SystemClock.uptimeMillis()
+            );
+
           case ATTACH_MEASURED_ROOT_VIEWS_END:
           case ATTACH_MEASURED_ROOT_VIEWS_START:
           case BUILD_NATIVE_MODULE_REGISTRY_END:
@@ -107,7 +115,7 @@ public class MainActivity extends ReactActivity {
             long startTime = SystemClock.uptimeMillis();
             safelyEmitMark(
               "react-native-mark",
-              getMarkName(name)+instanceKey,
+              instanceKey + "-" + getMarkName(name),
               tag,
               startTime
               );
@@ -160,7 +168,7 @@ public class MainActivity extends ReactActivity {
     params.putString("type", type);
     params.putString("name", name);
     params.putString("tag", tag);
-    params.putInt("startTime", (int) startTime);
+    params.putInt("timestamp", (int) startTime);
     this.getReactInstanceManager().getCurrentReactContext()
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
       .emit(type, params);

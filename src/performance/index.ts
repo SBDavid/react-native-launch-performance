@@ -3,4 +3,4 @@ import { PerformanceObserver } from './PerformanceObserver';
 
 const performance = new Performance();
 
-export default { performance, PerformanceObserver };
+export default { performance, PerformanceObserver, Performance };

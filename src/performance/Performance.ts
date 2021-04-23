@@ -23,7 +23,7 @@ export class Entry implements EntryProps {
 }
 
 const dateNow = Date.now || (() => Date.now());
-const startOffset = dateNow();
+let startOffset = dateNow();
 const Exception = Error;
 
 export class Performance extends EventEmitter {
@@ -68,11 +68,15 @@ export class Performance extends EventEmitter {
     return startOffset;
   }
 
-  mark(name: string, detail?: any) {
+  set timeOrigin(time: number) {
+    startOffset = time;
+  }
+
+  markStartTime(name: string, startTime: number, detail?: any) {
     const mark = new Entry({
       name: name,
       entryType: 'mark',
-      startTime: this.now,
+      startTime: startTime,
       duration: 0,
       detail: detail,
     });
@@ -80,6 +84,10 @@ export class Performance extends EventEmitter {
     this._entries.push(mark);
     this._marksIndex[name] = mark;
     this.emit('mark', mark);
+  }
+
+  mark(name: string, detail?: any) {
+    this.markStartTime(name, this.now, detail);
   }
 
   measure(name: string, startMark: string, endMark: string) {

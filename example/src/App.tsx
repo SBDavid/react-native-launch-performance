@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import LaunchPerformance from 'react-native-launch-performance';
+import { StyleSheet, View, Text, NativeEventEmitter } from 'react-native';
+// import LaunchPerformance from 'react-native-launch-performance';
 
 export default class App extends React.PureComponent {
 
   componentDidMount() {
-    LaunchPerformance.performance.mark("mark1");
-    console.info(LaunchPerformance.performance.getEntries());
+    const eventEmitter = new NativeEventEmitter();
+    eventEmitter.addListener("react-native-mark", (event) => {
+      console.info(event);
+    });
   }
 
   render() {
