@@ -55,8 +55,9 @@ test("send testEventStart", async () => {
 // 时间计算，接受measure
 test("find measure", async () => {
   await new Promise((r) => {
-    setTimeout(() => {r(null);}, 10);
+    setTimeout(() => {r(null);}, 100);
   });
+  p.markListener.getMeasure();
 
   expect(p.performance.getEntriesByName("testEvent").length).toBe(1);
 });

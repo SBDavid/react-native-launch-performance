@@ -176,12 +176,17 @@ android {
 
         }
     }
+
+    sourceSets.main {
+      jni.srcDirs = []
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+    //implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':ReactAndroid')
 
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
@@ -195,6 +200,8 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
+
+    implementation'com.facebook.soloader:soloader:0.10.1+'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

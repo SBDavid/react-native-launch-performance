@@ -59,7 +59,7 @@ public class MainActivity extends ReactActivity {
             eventsBuffered = false;
             emitBufferedMarks();
             break;
-          case RELOAD:
+          case DOWNLOAD_START:
             eventsBuffered = true;
             break;
         }
@@ -70,8 +70,10 @@ public class MainActivity extends ReactActivity {
   public void setupListener() {
     ReactMarker.addListener(
       (name, tag, instanceKey) -> {
+        long startTime = SystemClock.uptimeMillis();
+        System.out.println("name: " + name);
         switch (name) {
-          case RELOAD:
+          case DOWNLOAD_START:
             markBuffer.clear();
             // 标记开始时间
             safelyEmitMark(
@@ -80,7 +82,7 @@ public class MainActivity extends ReactActivity {
               "",
               SystemClock.uptimeMillis()
             );
-
+          case RELOAD:
           case ATTACH_MEASURED_ROOT_VIEWS_END:
           case ATTACH_MEASURED_ROOT_VIEWS_START:
           case BUILD_NATIVE_MODULE_REGISTRY_END:
@@ -97,7 +99,6 @@ public class MainActivity extends ReactActivity {
           case CREATE_VIEW_MANAGERS_END:
           case CREATE_VIEW_MANAGERS_START:
           case DOWNLOAD_END:
-          case DOWNLOAD_START:
           case LOAD_REACT_NATIVE_SO_FILE_END:
           case LOAD_REACT_NATIVE_SO_FILE_START:
           case PRE_RUN_JS_BUNDLE_START:
@@ -111,8 +112,9 @@ public class MainActivity extends ReactActivity {
           case RUN_JS_BUNDLE_START:
           case SETUP_REACT_CONTEXT_END:
           case SETUP_REACT_CONTEXT_START:
+          case PROCESS_PACKAGES_START:
+          case PROCESS_PACKAGES_END:
           case VM_INIT:
-            long startTime = SystemClock.uptimeMillis();
             safelyEmitMark(
               "react-native-mark",
               instanceKey + "-" + getMarkName(name),
@@ -120,7 +122,17 @@ public class MainActivity extends ReactActivity {
               startTime
               );
             break;
-
+          case NATIVE_MODULE_SETUP_START:
+          case NATIVE_MODULE_SETUP_END:
+          case REGISTER_JS_SEGMENT_START:
+          case REGISTER_JS_SEGMENT_STOP:
+            safelyEmitMark(
+              "react-native-mark",
+              tag + "-" + getMarkName(name),
+              tag,
+              startTime
+            );
+            break;
         }
       }
     );
@@ -164,6 +176,7 @@ public class MainActivity extends ReactActivity {
                     String name,
                     String tag,
                     long startTime) {
+    System.out.println("emit: " + name + " " + startTime);
     WritableMap params = Arguments.createMap();
     params.putString("type", type);
     params.putString("name", name);

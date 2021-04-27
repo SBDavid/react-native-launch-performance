@@ -37,17 +37,35 @@ export default class MarkListener {
 
     // 插入mark
     p.performance.markStartTime(event.name, event.timestamp, event.tag);
+  }
 
-    // 如果接收到 End 类的 mark，则插入 measure
-    const indexOfEnd = event.name.indexOf('End');
-    if (indexOfEnd !== -1 && indexOfEnd === event.name.length - 3) {
-      const measureName = event.name.substr(0, indexOfEnd);
-      p.performance.measure(
-        measureName,
-        measureName + 'Start',
-        measureName + 'End'
-      );
-    }
+  // 获取测量值
+  getMeasure() {
+    p.performance.getEntriesByType('mark').forEach((entry) => {
+      if (entry.name.indexOf('End') !== -1) {
+        // 如果接收到 End 类的 mark，则插入 measure
+        const indexOfEnd = entry.name.indexOf('End');
+        if (indexOfEnd !== -1 && indexOfEnd === entry.name.length - 3) {
+          const measureName = entry.name.substr(0, indexOfEnd);
+          p.performance.measure(
+            measureName,
+            measureName + 'Start',
+            measureName + 'End'
+          );
+        }
+      } else if (entry.name.indexOf('Stop') !== -1) {
+        // 如果接收到 End 类的 mark，则插入 measure
+        const indexOfEnd = entry.name.indexOf('Stop');
+        if (indexOfEnd !== -1 && indexOfEnd === entry.name.length - 4) {
+          const measureName = entry.name.substr(0, indexOfEnd);
+          p.performance.measure(
+            measureName,
+            measureName + 'Start',
+            measureName + 'Stop'
+          );
+        }
+      }
+    });
   }
 }
 
