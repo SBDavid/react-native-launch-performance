@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, } from 'react-native';
 import LaunchPerformance from 'react-native-launch-performance';
+LaunchPerformance.markListener.listenForReactNativeMarker();
 
 export default class App extends React.PureComponent {
 
   componentDidMount() {
-    LaunchPerformance.markListener.listenForReactNativeMarker();
     const observer = new LaunchPerformance.PerformanceObserver(LaunchPerformance.performance, (entry) => {
       console.info(entry.name, entry.detail, entry.duration, entry.startTime);
     });

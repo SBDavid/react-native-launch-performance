@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "github:SBDavid/react-native#v0.63.4"
+    "react-native": "github:SBDavid/react-native#v0.63.4",
+    "metro": "github:SBDavid/metro#v0.59.0_xm"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
