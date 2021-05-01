@@ -4,6 +4,7 @@
 
 import LaunchPerformance from 'react-native-launch-performance';
 LaunchPerformance.markListener.listenForReactNativeMarker();
+LaunchPerformance.markListener.listenForJsModuleRequire();
 
 const observer = new LaunchPerformance.PerformanceObserver(LaunchPerformance.performance, (entry) => {
   console.info(entry.name, entry.detail, entry.duration, entry.startTime);

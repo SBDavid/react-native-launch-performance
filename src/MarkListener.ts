@@ -1,5 +1,5 @@
 import p from './performance';
-import { NativeEventEmitter, Systrace } from 'react-native';
+import { NativeEventEmitter } from 'react-native';
 import type EventEmitter from 'eventemitter3';
 
 interface ReactNativeMarkEvent {
@@ -30,9 +30,14 @@ export default class MarkListener {
   }
 
   listenForJsModuleRequire() {
-    Systrace.beginEvent = this._jsModuleInitStartListener;
+    /* eslint-disable no-undef */
     // @ts-ignore
-    Systrace.endEvent = this.npm;
+    console.info('__r', __r.Systrace);
+    /* eslint-disable no-undef */
+    // @ts-ignore
+    __r.Systrace.beginEvent = this._jsModuleInitStartListener.bind(this);
+    // @ts-ignore
+    __r.Systrace.endEvent = this._jsModuleInitEndListener.bind(this);
   }
 
   // 处理原生模块的加载，以及RN框架的启动
@@ -48,11 +53,13 @@ export default class MarkListener {
 
   // 处理js模块加载、解释、执行的开始时间
   _jsModuleInitStartListener(event: string) {
+    console.info('_jsModuleInitStartListener', event);
     p.performance.markStartTime(event + 'Start', Date.now(), event);
   }
 
   // 处理js模块加载、解释、执行的结束时间
   _jsModuleInitEndListener(event: string) {
+    console.info('_jsModuleInitEndListener', event);
     p.performance.markStartTime(event + 'End', Date.now(), event);
   }
 
