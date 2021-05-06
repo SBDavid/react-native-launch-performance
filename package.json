@@ -69,7 +69,7 @@
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "github:SBDavid/react-native#v0.63.4"
+    "react-native": "github:SBDavid/react-native#v0.63.4_xm"
   },
   "jest": {
     "preset": "react-native",

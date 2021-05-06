@@ -11,9 +11,8 @@
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "github:SBDavid/react-native#v0.63.4",
-    "react-native-launch-performance": "github:SBDavid/react-native-launch-performance#master",
-    "metro": "file:/Users/jiaweitang/002-learn/metro/packages/metro/"
+    "react-native": "0.63.4",
+    "react-native-launch-performance": "github:SBDavid/react-native-launch-performance#master"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

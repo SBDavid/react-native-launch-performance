@@ -37,4 +37,8 @@ module.exports = {
       },
     }),
   },
+
+  serializer: {
+    polyfillModuleNames: [require.resolve('react-native-launch-performance/src/polyfills/require.js')]
+  },
 };
