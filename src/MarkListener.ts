@@ -29,10 +29,8 @@ export default class MarkListener {
     );
   }
 
+  // 作废，脚本启动阶段无法执行脚本内容，需要先执行完所有的require
   listenForJsModuleRequire() {
-    /* eslint-disable no-undef */
-    // @ts-ignore
-    console.info('__r', __r.Systrace);
     /* eslint-disable no-undef */
     // @ts-ignore
     __r.Systrace.beginEvent = this._jsModuleInitStartListener.bind(this);
@@ -53,14 +51,18 @@ export default class MarkListener {
 
   // 处理js模块加载、解释、执行的开始时间
   _jsModuleInitStartListener(event: string) {
-    console.info('_jsModuleInitStartListener', event);
-    p.performance.markStartTime(event + 'Start', Date.now(), event);
+    if (event && event.indexOf('JS_require_') !== -1) {
+      console.info('_jsModuleInitStartListener', event);
+      p.performance.markStartTime(event + 'Start', Date.now(), event);
+    }
   }
 
   // 处理js模块加载、解释、执行的结束时间
   _jsModuleInitEndListener(event: string) {
-    console.info('_jsModuleInitEndListener', event);
-    p.performance.markStartTime(event + 'End', Date.now(), event);
+    if (event && event.indexOf('JS_require_') !== -1) {
+      console.info('_jsModuleInitEndListener', event);
+      p.performance.markStartTime(event + 'End', Date.now(), event);
+    }
   }
 
   // 获取测量值
@@ -86,6 +88,41 @@ export default class MarkListener {
             measureName,
             measureName + 'Start',
             measureName + 'Stop'
+          );
+        }
+      }
+    });
+  }
+
+  // 获取jsModule相关数据
+  getJsModuleMeasure() {
+    // TODO:清楚之前的数据
+    // @ts-ignore
+    const modules = __r.getModules();
+    const moduleIds = Object.keys(modules);
+
+    moduleIds
+      .filter((moduleId) => modules[moduleId].isInitialized)
+      .forEach((moduleId) => {
+        const module = modules[moduleId];
+        if (module.beginTime && module.endTime) {
+          const name = 'JS_require_' + (module.verboseName || moduleId);
+          p.performance.markStartTime(name + '_Start', module.beginTime);
+          p.performance.markStartTime(name + '_End', module.endTime);
+        }
+      });
+    p.performance.getEntriesByType('mark').forEach((entry) => {
+      if (
+        entry.name.indexOf('End') !== -1 &&
+        entry.name.indexOf('JS_require_') !== -1
+      ) {
+        const indexOfEnd = entry.name.indexOf('End');
+        if (indexOfEnd !== -1 && indexOfEnd === entry.name.length - 3) {
+          const measureName = entry.name.substr(0, indexOfEnd);
+          p.performance.measure(
+            measureName,
+            measureName + 'Start',
+            measureName + 'End'
           );
         }
       }

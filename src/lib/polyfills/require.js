@@ -236,8 +236,22 @@
    moduleDefinersBySegmentID[segmentID] = moduleDefiner;
  }
  
+ metroRequire.Systrace = {
+   beginEvent: string => {},
+   endEvent: string => {}
+ }; // `metroRequire` calls into the require polyfill itself are not analyzed and
+ // replaced so that they use numeric module IDs.
+ // The systrace module will expose itself on the metroRequire function so that
+ // it can be used here.
+ // TODO(t9759686) Scan polyfills for dependencies, too
+ 
+ var Systrace = metroRequire.Systrace,
+   Refresh = metroRequire.Refresh;
+ 
  function loadModuleImplementation(moduleId, module) {
-   Systrace.beginEvent("JS_require_" + (module.verboseName || moduleId));
+   const moduleName = module.verboseName || moduleId;
+   Systrace.beginEvent("JS_require_" + moduleName);
+   const beginTime = Date.now();
  
    if (!module && moduleDefinersBySegmentID.length > 0) {
      const _unpackModuleId = unpackModuleId(moduleId),
@@ -269,15 +283,6 @@
  
    if (module.hasError) {
      throw moduleThrewError(moduleId, module.error);
-   } // `metroRequire` calls into the require polyfill itself are not analyzed and
-   // replaced so that they use numeric module IDs.
-   // The systrace module will expose itself on the metroRequire function so that
-   // it can be used here.
-   // TODO(t9759686) Scan polyfills for dependencies, too
- 
-   if (__DEV__) {
-     var Systrace = metroRequire.Systrace,
-       Refresh = metroRequire.Refresh;
    } // We must optimistically mark module as initialized before running the
    // factory to keep any require cycles inside the factory from causing an
    // infinite require loop.
@@ -344,7 +349,9 @@
        }
      }
  
-     Systrace.endEvent("JS_require_" + (module.verboseName || moduleId));
+     Systrace.endEvent("JS_require_" + moduleName);
+     module.endTime = Date.now();
+     module.beginTime = beginTime;
      return moduleObject.exports;
    } catch (e) {
      module.hasError = true;
