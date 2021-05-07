@@ -49,7 +49,7 @@ export default class MarkListener {
     p.performance.markStartTime(event.name, event.timestamp, event.tag);
   }
 
-  // 处理js模块加载、解释、执行的开始时间
+  // 作废，处理js模块加载、解释、执行的开始时间
   _jsModuleInitStartListener(event: string) {
     if (event && event.indexOf('JS_require_') !== -1) {
       console.info('_jsModuleInitStartListener', event);
@@ -57,7 +57,7 @@ export default class MarkListener {
     }
   }
 
-  // 处理js模块加载、解释、执行的结束时间
+  // 作废，处理js模块加载、解释、执行的结束时间
   _jsModuleInitEndListener(event: string) {
     if (event && event.indexOf('JS_require_') !== -1) {
       console.info('_jsModuleInitEndListener', event);
@@ -65,7 +65,7 @@ export default class MarkListener {
     }
   }
 
-  // 获取测量值
+  // 获取测量值，更具mark标记生成measure
   getMeasure() {
     p.performance.getEntriesByType('mark').forEach((entry) => {
       if (entry.name.indexOf('End') !== -1) {
@@ -94,23 +94,25 @@ export default class MarkListener {
     });
   }
 
-  // 获取jsModule相关数据
+  // 获取jsModule相关数据，更具mark标记生成measure
   getJsModuleMeasure() {
     // TODO:清楚之前的数据
     // @ts-ignore
     const modules = __r.getModules();
     const moduleIds = Object.keys(modules);
 
+    // 发送start和end的mark标记
     moduleIds
       .filter((moduleId) => modules[moduleId].isInitialized)
       .forEach((moduleId) => {
         const module = modules[moduleId];
         if (module.beginTime && module.endTime) {
           const name = 'JS_require_' + (module.verboseName || moduleId);
-          p.performance.markStartTime(name + '_Start', module.beginTime);
-          p.performance.markStartTime(name + '_End', module.endTime);
+          p.performance.markStartTime(name + 'Start', module.beginTime);
+          p.performance.markStartTime(name + 'End', module.endTime);
         }
       });
+    // 发送measure标记
     p.performance.getEntriesByType('mark').forEach((entry) => {
       if (
         entry.name.indexOf('End') !== -1 &&
