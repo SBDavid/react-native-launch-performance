@@ -6,12 +6,12 @@ p.markListener.listenForTestMarker(emitter);
 
 // 重置开始时间
 test("set originTime", async () => {
-  emitter.emit("react-native-mark", {
+  emitter.emit("react-native-mark", [{
     name: "initTime",
     tag: "initTimeTag",
     timestamp: 123,
     type: "react-native-mark"
-  });
+  }]);
 
   await new Promise((r) => {
     setTimeout(() => {r(null);}, 10);
@@ -22,12 +22,12 @@ test("set originTime", async () => {
 
 // 发送开始事件
 test("send testEventStart", async () => {
-  emitter.emit("react-native-mark", {
+  emitter.emit("react-native-mark", [{
     name: "testEventStart",
     tag: "tag",
     timestamp: 100,
     type: "react-native-mark"
-  });
+  }]);
 
   await new Promise((r) => {
     setTimeout(() => {r(null);}, 10);
@@ -38,12 +38,12 @@ test("send testEventStart", async () => {
 
 // 发送结束事件
 test("send testEventStart", async () => {
-  emitter.emit("react-native-mark", {
+  emitter.emit("react-native-mark", [{
     name: "testEventEnd",
     tag: "tag",
     timestamp: 200,
     type: "react-native-mark"
-  });
+  }]);
 
   await new Promise((r) => {
     setTimeout(() => {r(null);}, 10);

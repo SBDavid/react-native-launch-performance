@@ -39,14 +39,16 @@ export default class MarkListener {
   }
 
   // 处理原生模块的加载，以及RN框架的启动
-  _reactNativeMarkListener(event: ReactNativeMarkEvent) {
-    // 重置开始时间的偏移量
-    if (event.name === 'initTime') {
-      p.performance.timeOrigin = event.timestamp;
-    }
+  _reactNativeMarkListener(events: ReactNativeMarkEvent[]) {
+    events.forEach((event) => {
+      // 重置开始时间的偏移量
+      if (event.name === 'initTime') {
+        p.performance.timeOrigin = event.timestamp;
+      }
 
-    // 插入mark
-    p.performance.markStartTime(event.name, event.timestamp, event.tag);
+      // 插入mark
+      p.performance.markStartTime(event.name, event.timestamp, event.tag);
+    });
   }
 
   // 作废，处理js模块加载、解释、执行的开始时间

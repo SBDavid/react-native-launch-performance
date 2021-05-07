@@ -6,6 +6,7 @@ import android.os.SystemClock;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.ReactMarker;
 import com.facebook.react.bridge.ReactMarkerConstants;
+import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.Arguments;
@@ -182,8 +183,13 @@ public class MainActivity extends ReactActivity {
     params.putString("name", name);
     params.putString("tag", tag);
     params.putInt("timestamp", (int) startTime);
+
+    // 在测试阶段单个事件发送，正式环境中使用数组批量发送
+    WritableNativeArray events = new WritableNativeArray();
+    events.pushMap(params);
+
     this.getReactInstanceManager().getCurrentReactContext()
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-      .emit(type, params);
+      .emit(type, events);
   }
 }
