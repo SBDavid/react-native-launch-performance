@@ -44,6 +44,24 @@ export class Performance extends EventEmitter {
     return result;
   }
 
+  // entry的模糊查询
+  _filterEntriesStartWithName(name: string, type?: EntryProps['entryType']) {
+    const n = this._entries.length;
+    const result = [];
+    let i = 0;
+
+    for (; i < n; i++) {
+      if (this._entries[i].name.indexOf(name) === 0) {
+        if (type === undefined || this._entries[i].entryType === type) {
+          result.push(this._entries[i]);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  // 按name精确的清除数据
   _clearEntries(type: Entry['entryType'], name: string) {
     let i = this._entries.length;
 
@@ -53,6 +71,23 @@ export class Performance extends EventEmitter {
       if (
         entry.entryType === type &&
         (name === undefined || entry.name === name)
+      ) {
+        this._entries.splice(i, 1);
+      }
+    }
+  }
+
+  // 按name模糊的清除数据
+  _clearEntriesStartWith(type: Entry['entryType'], name: string) {
+    let i = this._entries.length;
+
+    while (i--) {
+      const entry = this._entries[i];
+
+      if (
+        entry.entryType === type &&
+        name !== undefined &&
+        entry.name.indexOf(name) === 0
       ) {
         this._entries.splice(i, 1);
       }
@@ -147,6 +182,18 @@ export class Performance extends EventEmitter {
     return this._filterEntries('name', name);
   }
 
+  getEntryStartWithName(name: string) {
+    return this._filterEntriesStartWithName(name);
+  }
+
+  getMeasureStartWithName(name: string) {
+    return this._filterEntriesStartWithName(name, 'measure');
+  }
+
+  getMarkStartWithName(name: string) {
+    return this._filterEntriesStartWithName(name, 'mark');
+  }
+
   clearMarks(name: string) {
     this._clearEntries('mark', name);
     delete this._marksIndex[name];
@@ -154,6 +201,10 @@ export class Performance extends EventEmitter {
 
   clearMeasures(name: string) {
     this._clearEntries('measure', name);
+  }
+
+  clearMeasuresStartWith(name: string) {
+    this._clearEntriesStartWith('measure', name);
   }
 
   cleanAllEntries() {

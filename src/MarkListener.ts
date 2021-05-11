@@ -16,11 +16,13 @@ export default class MarkListener {
     this._eventEmitter = null;
   }
 
-  // test
+  // 仅作为单元测试使用
   listenForTestMarker(emitter: EventEmitter) {
     emitter.on('react-native-mark', this._reactNativeMarkListener.bind(this));
   }
 
+  // 监听native代码发出的事件
+  // TODO native模块尚未开发
   listenForReactNativeMarker() {
     if (!this._eventEmitter) this._eventEmitter = new NativeEventEmitter();
     this._eventEmitter.addListener(
@@ -39,6 +41,7 @@ export default class MarkListener {
   }
 
   // 处理原生模块的加载，以及RN框架的启动
+  // 事件名initTime可能发生变化
   _reactNativeMarkListener(events: ReactNativeMarkEvent[]) {
     events.forEach((event) => {
       // 重置开始时间的偏移量
@@ -68,6 +71,7 @@ export default class MarkListener {
   }
 
   // 获取测量值，更具mark标记生成measure
+  // TODO: 原生模块尚未开发
   getMeasure() {
     p.performance.getEntriesByType('mark').forEach((entry) => {
       if (entry.name.indexOf('End') !== -1) {
@@ -98,7 +102,9 @@ export default class MarkListener {
 
   // 获取jsModule相关数据，更具mark标记生成measure
   getJsModuleMeasure() {
-    // TODO:清楚之前的数据
+    // 清楚之前的measure数据
+    p.performance.clearMeasuresStartWith('JS_require_');
+
     // @ts-ignore
     const modules = __r.getModules();
     const moduleIds = Object.keys(modules);
@@ -131,6 +137,9 @@ export default class MarkListener {
         }
       }
     });
+
+    // 获得measure
+    return p.performance.getMeasureStartWithName('JS_require_');
   }
 }
 

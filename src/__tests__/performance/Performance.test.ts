@@ -62,3 +62,15 @@ test("add detail", () => {
   expect(performance.getEntriesByName('measure-1')[0].detail.end).toStrictEqual("end");
 
 });
+
+// 按name模糊查询measure
+test("getEntryStartWithName", () => {
+  performance.cleanAllEntries();
+  performance.mark('mark-1', "start");
+  performance.mark('mark-2', "end");
+  performance.measure("measure-1", 'mark-1', 'mark-2');
+  performance.measure("measure-2", 'mark-1', 'mark-2');
+  expect(performance.getEntryStartWithName('measure-1').length).toBe(1);
+  expect(performance.getEntryStartWithName('measure').length).toBe(2);
+  expect(performance.getEntryStartWithName('measure-3').length).toBe(0);
+});
