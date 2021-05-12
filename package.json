@@ -1,6 +1,6 @@
 {
-  "name": "react-native-launch-performance",
-  "version": "0.1.0",
+  "name": "@xmly/react-native-launch-performance",
+  "version": "0.1.1",
   "description": "react-native-launch-performance",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
