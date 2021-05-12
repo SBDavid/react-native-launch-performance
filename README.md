@@ -7,10 +7,15 @@ react-native-launch-performance 是一个分析RN启动性能的工具。支持�
 - **网络请求耗时**：处于开发阶段
 
 ## Contents
-- [Requirements](#-requirements)
-- [Installation](#-Installation)
-- [Usage](#-Usage)
-- [Common bad case](#-Common bad case)
+- [react-native-launch-performance](#react-native-launch-performance)
+  - [Contents](#contents)
+  - [📋 Requirements](#-requirements)
+  - [🎉 Installation](#-installation)
+  - [Usage](#usage)
+  - [📖 Common bad case](#-common-bad-case)
+    - [1. 引入大型三方库](#1-引入大型三方库)
+    - [2. 过早的引入三方库](#2-过早的引入三方库)
+    - [3. Router未使用懒加载](#3-router未使用懒加载)
 
 ## 📋 Requirements
 
@@ -30,7 +35,7 @@ npm install @xmly/react-native-launch-performance
 // 目的是为了在RN模块系统中加入模块初始化的时间节点
 module.exports = {
   serializer: {
-    polyfillModuleNames: [require.resolve('react-native-launch-performance/src/lib/polyfills/require.js')]
+    polyfillModuleNames: [require.resolve('@xmly/react-native-launch-performance/src/lib/polyfills/require.js')]
   }
 }
 ```
