@@ -2713,6 +2713,11 @@ eventemitter3@^3.0.0:
   resolved "https://r.cnpmjs.org/eventemitter3/download/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
   integrity sha1-LT1I+cNGaY/Og6hdfWZOmFNd9uc=
 
+eventemitter3@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.npm.taobao.org/eventemitter3/download/eventemitter3-4.0.7.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feventemitter3%2Fdownload%2Feventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha1-Lem2j2Uo1WRO9cWVJqG0oHMGFp8=
+
 exec-sh@^0.3.2:
   version "0.3.6"
   resolved "https://r.cnpmjs.org/exec-sh/download/exec-sh-0.3.6.tgz#ff264f9e325519a60cb5e273692943483cca63bc"
@@ -5473,6 +5478,12 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://r.cnpmjs.org/react-is/download/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
 
+"react-native-launch-performance@file:..":
+  version "0.1.1"
+  dependencies:
+    eventemitter3 "^4.0.7"
+    treeify "^1.1.0"
+
 react-native@0.63.4:
   version "0.63.4"
   resolved "https://r.cnpmjs.org/react-native/download/react-native-0.63.4.tgz#2210fdd404c94a5fa6b423c6de86f8e48810ec36"
@@ -6519,6 +6530,11 @@ tr46@^1.0.1:
   integrity sha1-qLE/1r/SSJUZZ0zN5VujaTtwbQk=
   dependencies:
     punycode "^2.1.0"
+
+treeify@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/treeify/download/treeify-1.1.0.tgz#4e31c6a463accd0943879f30667c4fdaff411bb8"
+  integrity sha1-TjHGpGOszQlDh58wZnxP2v9BG7g=
 
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"

@@ -12,8 +12,8 @@ import LaunchPerformance from 'react-native-launch-performance';
 // });
 
 setTimeout(() => {
-  const measures = LaunchPerformance.markListener.getJsModuleMeasure();
-  console.info(measures);
+  // LaunchPerformance.markListener.getJsModuleMeasure();
+  (new LaunchPerformance.JsModulePrinter()).print();
 }, 2000);
 
 import {AppRegistry} from 'react-native';
