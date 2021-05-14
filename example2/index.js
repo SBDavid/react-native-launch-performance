@@ -2,7 +2,7 @@
  * @format
  */
 
-import LaunchPerformance from 'react-native-launch-performance';
+import LaunchPerformance from '@xmly/react-native-launch-performance';
 
 // const observer = new LaunchPerformance.PerformanceObserver(LaunchPerformance.performance, (entry) => {
 //   console.info(entry.name, entry.detail, entry.duration, entry.startTime);
@@ -13,7 +13,8 @@ import LaunchPerformance from 'react-native-launch-performance';
 
 setTimeout(() => {
   // LaunchPerformance.markListener.getJsModuleMeasure();
-  (new LaunchPerformance.JsModulePrinter()).print();
+  const printer = new LaunchPerformance.JsModulePrinter();
+  printer.print({minDuratin: 1});
 }, 2000);
 
 import {AppRegistry} from 'react-native';

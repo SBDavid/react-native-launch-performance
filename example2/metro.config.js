@@ -39,6 +39,6 @@ module.exports = {
   },
 
   serializer: {
-    polyfillModuleNames: [require.resolve('react-native-launch-performance/src/lib/polyfills/require.js')]
+    polyfillModuleNames: [require.resolve('@xmly/react-native-launch-performance/src/lib/polyfills/require.js')]
   },
 };

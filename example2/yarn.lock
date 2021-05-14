@@ -1263,6 +1263,12 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
+"@xmly/react-native-launch-performance@file:..":
+  version "0.1.2"
+  dependencies:
+    eventemitter3 "^4.0.7"
+    treeify "^1.1.0"
+
 abab@^2.0.0:
   version "2.0.5"
   resolved "https://r.cnpmjs.org/abab/download/abab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"
@@ -5477,12 +5483,6 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.13.1"
   resolved "https://r.cnpmjs.org/react-is/download/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
-
-"react-native-launch-performance@file:..":
-  version "0.1.1"
-  dependencies:
-    eventemitter3 "^4.0.7"
-    treeify "^1.1.0"
 
 react-native@0.63.4:
   version "0.63.4"
