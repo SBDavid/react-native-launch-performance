@@ -1,5 +1,6 @@
 // @ts-ignore
 import treeify from 'treeify';
+import { Platform } from 'react-native';
 
 // 用于打印的模块结构
 interface JsModule {
@@ -7,6 +8,7 @@ interface JsModule {
   children: JsModule[];
   offset: number;
   duration: number;
+  isBase: boolean;
 }
 
 // 数据源中的模块结构
@@ -23,15 +25,36 @@ interface PrintOption {
   minDuratin?: number;
 }
 
+interface MappingFile {
+  mappings: {
+    [key: string]: number;
+  };
+}
+
 // 打印出树形模块依赖结构并显示加载时间
 export class JsModulePrinter {
   modules: JsModuleScr[];
   option: PrintOption = {};
+  // basebundle文件
+  mappingFile: MappingFile;
 
   constructor() {
     // 获得模块数据
     // @ts-ignore
     this.modules = require.getModules();
+    this.mappingFile = { mappings: {} };
+    this._loadMapping();
+  }
+
+  // 加载basebundle中的mapping文件，仅在开发阶段使用
+  _loadMapping() {
+    if (__DEV__) {
+      if (Platform.OS === 'ios') {
+        this.mappingFile = require('../basebundle/ios/mapping.base.json');
+      } else {
+        this.mappingFile = require('../basebundle/android/mapping.base.json');
+      }
+    }
   }
 
   printTree(option: PrintOption) {
@@ -65,8 +88,10 @@ export class JsModulePrinter {
     depth: number
   ): JsModule | null {
     const module = this.modules[moduleId];
+    const mappings = this.mappingFile.mappings;
     const tree: JsModule = {
       verboseName: module.verboseName,
+      isBase: mappings[module.verboseName] !== undefined,
       offset: module.beginTime - startTime,
       duration: module.endTime - module.beginTime,
       children: [],

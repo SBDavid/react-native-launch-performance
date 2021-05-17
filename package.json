@@ -28,7 +28,7 @@
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "pods": "cd example && pod-install --quiet",
+    "pods": "cd example2 && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
   },
   "keywords": [
@@ -67,8 +67,7 @@
     "typescript": "^4.1.3"
   },
   "peerDependencies": {
-    "react": "16.13.1",
-    "react-native": "git+ssh://git@gitlab.ximalaya.com:react-native-app/xm-react-native-0.56.1.git#f271c2a3"
+    "react": "16.13.1"
   },
   "jest": {
     "preset": "react-native",
@@ -154,6 +153,7 @@
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",
-    "treeify": "^1.1.0"
+    "treeify": "^1.1.0",
+    "react-native": "git+ssh://git@gitlab.ximalaya.com:react-native-app/xm-react-native-0.56.1.git#f271c2a3"
   }
 }
