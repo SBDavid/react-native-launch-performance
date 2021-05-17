@@ -34,12 +34,21 @@ export class JsModulePrinter {
     this.modules = require.getModules();
   }
 
-  print(option: PrintOption) {
+  printTree(option: PrintOption) {
     this.option = option;
     if (!this.option) {
       this.option = {};
     }
     console.log(treeify.asTree(this._buildTree(0), true));
+  }
+
+  printJson(option: PrintOption) {
+    this.option = option;
+    if (!this.option) {
+      this.option = {};
+    }
+    const tree = this._buildTree(0);
+    console.info(JSON.stringify(tree));
   }
 
   _buildTree(initId: number): JsModule | null {

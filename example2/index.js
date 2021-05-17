@@ -14,7 +14,7 @@ import LaunchPerformance from '@xmly/react-native-launch-performance';
 setTimeout(() => {
   // LaunchPerformance.markListener.getJsModuleMeasure();
   const printer = new LaunchPerformance.JsModulePrinter();
-  printer.print({minDuratin: 1});
+  printer.printJson({minDuratin: 1});
 }, 2000);
 
 import {AppRegistry} from 'react-native';
