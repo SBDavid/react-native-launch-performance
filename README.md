@@ -75,6 +75,17 @@ setTimeout(() => {
 const measures = LaunchPerformance.markListener.getJsModuleMeasure();
 ```
 
+你也可以以Json格式获取加载数据
+```js
+import LaunchPerformance from '@xmly/react-native-launch-performance';
+setTimeout(() => {
+  const printer = new LaunchPerformance.JsModulePrinter();
+  printer.printJson({
+    minDuratin: 10
+  });
+}, 2000);
+```
+
 ## 📖 Common bad case
 以下是一些常见的错误用例，这些做法可能会引发首屏发生白屏
 
