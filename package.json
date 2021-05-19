@@ -1,6 +1,6 @@
 {
   "name": "@xmly/react-native-launch-performance",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "react-native-launch-performance",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -154,7 +154,8 @@
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",
-    "treeify": "^1.1.0",
-    "react-native": "git+ssh://git@gitlab.ximalaya.com:react-native-app/xm-react-native-0.56.1.git#f271c2a3"
+    "react-native": "0.63.4",
+    "react-native-flipper": "^0.90.2",
+    "treeify": "^1.1.0"
   }
 }

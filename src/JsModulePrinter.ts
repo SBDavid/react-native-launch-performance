@@ -20,7 +20,8 @@ interface JsModuleScr {
   endTime: number;
 }
 
-interface PrintOption {
+export interface PrintOption {
+  initId?: number;
   depth?: number;
   minDuratin?: number;
 }
@@ -66,12 +67,17 @@ export class JsModulePrinter {
   }
 
   printJson(option: PrintOption) {
+    console.info(this.getJson(option));
+  }
+
+  getJson(option: PrintOption) {
     this.option = option;
     if (!this.option) {
-      this.option = {};
+      this.option = {
+        initId: 0,
+      };
     }
-    const tree = this._buildTree(0);
-    console.info(JSON.stringify(tree));
+    return this._buildTree(this.option.initId as number);
   }
 
   _buildTree(initId: number): JsModule | null {
