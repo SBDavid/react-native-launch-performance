@@ -26,7 +26,6 @@ public class MainApplication extends Application implements ReactApplication {
         List<ReactPackage> packages = new PackageList(this).getPackages();
         // Packages that cannot be autolinked yet can be added manually here, for LaunchPerformanceExample:
         // packages.add(new MyReactNativePackage());
-
         return packages;
       }
 
@@ -48,22 +47,26 @@ public class MainApplication extends Application implements ReactApplication {
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager()); // Remove this line if you don't want Flipper enabled
   }
 
+
+
   /**
    * Loads Flipper in React Native templates.
    *
    * @param context
    */
   private static void initializeFlipper(Context context, ReactInstanceManager reactInstanceManager) {
+    System.out.println("BuildConfig.DEBUG " + BuildConfig.DEBUG);
     if (BuildConfig.DEBUG) {
       try {
         /*
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.reactnativelaunchperformanceExample.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.example2.ReactNativeFlipper");
         aClass
           .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
           .invoke(null, context, reactInstanceManager);
+        System.out.println("ReactNativeFlipper 111");
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
       } catch (NoSuchMethodException e) {

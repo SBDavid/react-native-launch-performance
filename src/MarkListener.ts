@@ -104,6 +104,8 @@ export default class MarkListener {
   getJsModuleMeasure() {
     // 清楚之前的measure数据
     p.performance.clearMeasuresStartWith('JS_require_');
+    // 发送开始事件，客户端接收到事件后可清空数据
+    p.performance.markStartTime('JS_require_start', p.performance.timeOrigin);
 
     // @ts-ignore
     const modules = __r.getModules();

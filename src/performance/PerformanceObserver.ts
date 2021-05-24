@@ -15,6 +15,7 @@ export class PerformanceObserver {
   constructor(performance: Performance, callback: PerformanceObserverCallback) {
     this._callback = callback;
     this._performance = performance;
+    this._prosess = this._prosess.bind(this);
   }
 
   _prosess(entry: Entry) {
@@ -42,12 +43,12 @@ export class PerformanceObserver {
       this._option = option;
     }
 
-    this._performance.on('mark', this._prosess.bind(this));
-    this._performance.on('measure', this._prosess.bind(this));
+    this._performance.on('mark', this._prosess, this);
+    this._performance.on('measure', this._prosess, this);
   }
 
   disconnect(): void {
-    this._performance.off('mark', this._prosess.bind(this));
-    this._performance.off('measure', this._prosess.bind(this));
+    this._performance.off('mark', this._prosess, this);
+    this._performance.off('measure', this._prosess, this);
   }
 }
