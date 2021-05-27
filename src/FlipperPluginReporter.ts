@@ -2,24 +2,34 @@ import type { Flipper } from 'react-native-flipper';
 import p from './performance';
 import { markListener } from './MarkListener';
 import { JsModulePrinter, PrintOption } from './JsModulePrinter';
+import BaseBundle from './BaseBundle';
 
 export function loadPlugin(addPlugin: Function) {
+  // basebundle文件
+
   // 监听 measure事件
   const _observer = new p.PerformanceObserver(p.performance, (entry) => {
-    if (_connectionLog) {
-      if (entry.duration >= _minDuration) {
-        _connectionLog.send('measure', entry);
-      }
+    if (!_connectionLog) {
+      return;
     }
-  });
-  // 监听开始事件
-  const _observerStart = new p.PerformanceObserver(p.performance, (entry) => {
-    if (_connectionLog) {
+
+    if (entry.entryType === 'mark') {
       if (entry.name === 'JS_require_start') {
-        _connectionLog.send('JS_require_start', entry);
+        _connectionLog.send('JS_require_start', {
+          isBase: BaseBundle.isBase(entry.name),
+          ...entry,
+        });
+      }
+    } else if (entry.entryType === 'measure') {
+      if (entry.duration >= _minDuration) {
+        _connectionLog.send('measure', {
+          isBase: BaseBundle.isBase(entry.name),
+          ...entry,
+        });
       }
     }
   });
+
   let _connectionLog: Flipper.FlipperConnection | null;
   let _connectionTree: Flipper.FlipperConnection | null;
   // 最小加载时间
@@ -39,15 +49,7 @@ export function loadPlugin(addPlugin: Function) {
       });
       // 逐条监听 measure 事件
       _observer.observe({
-        types: ['measure'],
-      });
-      _observerStart.observe({
-        types: ['mark'],
-      });
-      // 获取完整的信息
-      _connectionLog.receive('getTree', (data: PrintOption, responder) => {
-        const printer = new JsModulePrinter();
-        responder.success(printer.getJson(data));
+        types: ['measure', 'mark'],
       });
       markListener.getJsModuleMeasure();
     },
@@ -55,7 +57,6 @@ export function loadPlugin(addPlugin: Function) {
       console.info('onDisconnect LaunchPerformanceLog');
       _connectionLog = null;
       _observer.disconnect();
-      _observerStart.disconnect();
     },
     runInBackground: () => {
       return true;
@@ -69,6 +70,7 @@ export function loadPlugin(addPlugin: Function) {
     },
     onConnect: (connection: Flipper.FlipperConnection) => {
       console.info('onConnect LaunchPerformanceTree');
+      const printer = new JsModulePrinter();
       _connectionTree = connection;
       // 设置最小加载时间
       _connectionTree.receive('setMinDuration', (data: number) => {
@@ -76,8 +78,13 @@ export function loadPlugin(addPlugin: Function) {
       });
       // 获取完整的信息
       _connectionTree.receive('getTree', (data: PrintOption, responder) => {
-        const printer = new JsModulePrinter();
+        console.info('receive getTree', data);
         responder.success(printer.getJson(data));
+      });
+      // 获取列表格式的加载信息
+      _connectionTree.receive('getList', (data: PrintOption, responder) => {
+        console.info('receive getList', data);
+        responder.success(printer.getList(data));
       });
       markListener.getJsModuleMeasure();
     },
