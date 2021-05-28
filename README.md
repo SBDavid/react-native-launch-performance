@@ -48,7 +48,9 @@ module.exports = {
 - 下载Filipper https://fbflipper.com
 - 安装可视化插件
   - LaunchPerformanceLog
+  - ![LaunchPerformanceLog](/log-demo.jpg)
   - LaunchPerformanceTree
+  - ![LaunchPerformanceTree](/tree-demo.jpg)
 - 安装开发依赖 npm i --save -dev react-native-flipper
 - 初始化插件
 ```js
