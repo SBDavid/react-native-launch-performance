@@ -12,6 +12,8 @@ react-native-launch-performance 是一个分析RN启动性能的工具。支持�
   - [📋 Requirements](#-requirements)
   - [🎉 Installation](#-installation)
   - [Usage](#usage)
+    - [1. 通过Flipper查看数据](#1-通过flipper查看数据)
+    - [2. 通过Api获取数据，可对数据进行二次加工](#2-通过api获取数据可对数据进行二次加工)
   - [📖 Common bad case](#-common-bad-case)
     - [1. 引入大型三方库](#1-引入大型三方库)
     - [2. 过早的引入三方库](#2-过早的引入三方库)
@@ -40,11 +42,23 @@ module.exports = {
 }
 ```
 
-
-
 ## Usage
 
-目前仅支持通过Api主动获取性能相关数据，可视化工具将在后续版本中推出。
+### 1. 通过Flipper查看数据
+- 下载Filipper https://fbflipper.com
+- 安装可视化插件
+  - LaunchPerformanceLog
+  - LaunchPerformanceTree
+- 安装开发依赖 npm i --save -dev react-native-flipper
+- 初始化插件
+```js
+// index.js
+import LaunchPerformance from '@xmly/react-native-launch-performance';
+import { addPlugin } from 'react-native-flipper';
+LaunchPerformance.loadPlugin(addPlugin);
+```
+
+### 2. 通过Api获取数据，可对数据进行二次加工
 
 本模块中的 Performance Api 和 web 中的项目相关概念一致，包括`mark`和`measure`概念。[请参考mozilla文档](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance)
 
