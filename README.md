@@ -96,7 +96,7 @@ const measures = LaunchPerformance.markListener.getJsModuleMeasure();
 import LaunchPerformance from '@xmly/react-native-launch-performance';
 setTimeout(() => {
   const printer = new LaunchPerformance.JsModulePrinter();
-  printer.printJson({
+  printer.getJson({
     minDuratin: 10
   });
 }, 2000);
