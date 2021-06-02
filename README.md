@@ -45,18 +45,28 @@ module.exports = {
 ## Usage
 
 ### 1. 通过Flipper查看数据
+- 环境配置
+  - 安装JDK: https://www.jianshu.com/p/a85658902f26
+  - 安装Android SDK: 
+    - 下载：https://developer.android.com/studio?gclid=Cj0KCQjw2NyFBhDoARIsAMtHtZ6VV_W52rASTc3q3g1qWuz3iR860Z0R3ysxeyxcGOfAjuLFNK_fqh4aAn1LEALw_wcB&gclsrc=aw.ds
+    - 配置： https://developer.android.com/about/versions/11/setup-sdk
+    - 环境变量配置：
+      - export ANDROID_HOME=/Users/jiaweitang/Library/Android/sdk
+      - export ANDROID_SDK=/Users/jiaweitang/Library/Android/sdk
 - 下载Filipper https://fbflipper.com
+  - 右下角点击`Setup Doctor`确认环境配置是否成功
 - 安装可视化插件
-  - LaunchPerformanceLog
+  - [LaunchPerformanceLog](https://github.com/SBDavid/flipper-plugin-launchperformancetree-client)
   - ![LaunchPerformanceLog](/log-demo.jpg)
-  - LaunchPerformanceTree
+  - [LaunchPerformanceTree](https://github.com/SBDavid/flipper-plugin-launchperformance-client)
   - ![LaunchPerformanceTree](/tree-demo.jpg)
 - 安装开发依赖 npm i --save -dev react-native-flipper
-- 初始化插件
+- 初始化插件（请不要在生产环境下安装插件）
 ```js
 // index.js
 import LaunchPerformance from '@xmly/react-native-launch-performance';
 import { addPlugin } from 'react-native-flipper';
+// 仅在开发环境中使用，生产环境有其他方法
 LaunchPerformance.loadPlugin(addPlugin);
 ```
 
