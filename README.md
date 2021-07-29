@@ -63,11 +63,12 @@ module.exports = {
 - 安装开发依赖 npm i --save -dev react-native-flipper
 - 初始化插件（请不要在生产环境下安装插件）
 ```js
-// index.js
-import LaunchPerformance from '@xmly/react-native-launch-performance';
-import { addPlugin } from 'react-native-flipper';
 // 仅在开发环境中使用，生产环境有其他方法
-LaunchPerformance.loadPlugin(addPlugin);
+if(__DEV__) {
+  const LaunchPerformance = require('@xmly/react-native-launch-performance');
+  const flipper = require('react-native-flipper');
+  LaunchPerformance.default.loadPlugin(flipper.addPlugin);
+}
 ```
 
 ### 2. 通过Api获取数据，可对数据进行二次加工
