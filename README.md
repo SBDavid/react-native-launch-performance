@@ -45,6 +45,7 @@ module.exports = {
 ## Usage
 
 ### 1. 通过Flipper查看数据
+- 需要指定分支的android包，请联系我
 - 环境配置
   - 安装JDK: https://www.jianshu.com/p/a85658902f26
   - 安装Android SDK: 
