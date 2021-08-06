@@ -215,8 +215,25 @@ function App () {
 ```
 
 **GoodCase.js**
+你可以使用 react-navigation-lazy-screen 实现页面懒加载 https://github.com/SBDavid/react-navigation-lazy-screen
+```jsx
+<RootStack.Screen name="StackScreen">
+  {(props) => {
+    return (
+      <LazyScreen
+        {...props}
+        pageName="Home"
+        fallback={<Text>Loading...</Text>}
+        factory={() => import('../screen/StackScreen')}
+      />
+    );
+  }}
+</RootStack.Screen>
+```
 
-你可以使用 [React.lazy](https://reactjs.org/docs/code-splitting.html) 实现组件的动态加载。
+你也可以使用 [React.lazy](https://reactjs.org/docs/code-splitting.html) 实现组件的动态加载。
+** 此方法有bug，无法收到首个focus事件 **
+
 
 ```jsx
 function App () {
