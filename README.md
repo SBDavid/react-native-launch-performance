@@ -79,39 +79,51 @@ if(__DEV__) {
 推荐在项目入口引入 react-native-launch-performance 模块。
 
 ```js
-import LaunchPerformance from "@xmly/react-native-launch-performance";
+if (__DEV__) {
+	const LaunchPerformance = require('@xmly/react-native-launch-performance')
 
-// 通过 PerformanceObserver 注册性能时间的监听回调
-const observer = new LaunchPerformance.PerformanceObserver(LaunchPerformance.performance, (entry) => {
-  console.info(entry.name, entry.detail, entry.duration, entry.startTime);
-});
+	// 通过 PerformanceObserver 注册性能时间的监听回调
+	const observer = new LaunchPerformance.default.PerformanceObserver(
+		LaunchPerformance.default.performance,
+		(entry: any) => {
+			console.info(entry.name, entry.duration, entry.startTime)
+		}
+	)
 
-// 选择要监听的entry类型，包含 measure 和 mark 两种。
-// mark 记录的是事件发生的时间戳
-// measure 记录的是通过 mark 计算得出的模块加载时长
-observer.observe({
-  types: ['measure']
-});
+	// 选择要监听的entry类型，包含 measure 和 mark 两种。
+	// mark 记录的是事件发生的时间戳
+	// measure 记录的是通过 mark 计算得出的模块加载时长
+	observer.observe({
+		types: ['measure']
+	})
 
-// 主动触发性能数据的计算
-// 推荐在一定延时后执行，以免影响首页启动性能
-setTimeout(() => {
-  LaunchPerformance.markListener.getJsModuleMeasure();
-}, 2000);
+	// 主动触发性能数据的计算
+	// 推荐在一定延时后执行，以免影响首页启动性能
+	setTimeout(() => {
+		LaunchPerformance.default.markListener.getJsModuleMeasure();
+	}, 2000)
+}
+```
 
-// 你也可以通过 getJsModuleMeasure 接口直接获得数据
-const measures = LaunchPerformance.markListener.getJsModuleMeasure();
+你也可以通过 getJsModuleMeasure 接口直接获得数据
+返回measure对象的数组
+```js
+if (__DEV__) {
+  const LaunchPerformance = require('@xmly/react-native-launch-performance')
+  const measures = LaunchPerformance.default.markListener.getJsModuleMeasure();
+}
 ```
 
 你也可以以Json格式获取加载数据
+你可对树形结构进行遍历
 ```js
-import LaunchPerformance from '@xmly/react-native-launch-performance';
-setTimeout(() => {
-  const printer = new LaunchPerformance.JsModulePrinter();
-  printer.getJson({
-    minDuratin: 10
-  });
-}, 2000);
+if (__DEV__) {
+	const LaunchPerformance = require('@xmly/react-native-launch-performance')
+	setTimeout(() => {
+		const printer = new LaunchPerformance.default.JsModulePrinter()
+		console.info(printer.getJson())
+	}, 2000)
+}
 ```
 
 ## 📖 Common bad case
